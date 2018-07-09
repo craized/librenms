@@ -1133,6 +1133,7 @@ function is_port_valid($port, $device)
     $ifName  = $port['ifName'];
     $ifAlias = $port['ifAlias'];
     $ifType  = $port['ifType'];
+    $ifIndex = $port['ifIndex'];
 
     if (str_i_contains($ifDescr, Config::getOsSetting($device['os'], 'good_if'))) {
         return true;
@@ -1174,7 +1175,46 @@ function is_port_valid($port, $device)
         }
     }
 
+
+    # This will strip out any LAG member subifs
+    # Keeps: ae0, ae0.300, ge-1/1/0
+    # Removes: ge-1/1/0.300 (Assuming ge-1/1/0 is part of a LAG)
+    foreach (Config::getCombined($device['os'], 'ignore_lag_member_subifs') as $lso) {
+        if (!is_port_primary($device['device_id'], $ifIndex)) {
+                d_echo("ignored by ignoreLagMemberSubifs: $ifIndex (matched: $lso)\n");
+                return false;
+        }
+    }
+
+
     return true;
+}
+
+# All of the "primary" interfaces will either have a port_id_low or port_id_high of 0
+function is_port_primary($device_id, $ifIndex)
+{
+    $return_index = dbFetchRow('SELECT
+    (
+     CASE
+      WHEN PS1.port_id_low = 0 THEN PS1.port_id_high
+      WHEN PS1.port_id_high = 0 THEN PS1.port_id_low
+     END
+    ) ifIndex
+    FROM ports_stack PS1 WHERE
+    (
+     (
+      PS1.port_id_low = ?
+      AND PS1.port_id_high = 0
+     )
+     OR
+     (
+      PS1.port_id_low = 0
+      AND PS1.port_id_high = ?
+     )
+    )
+    AND PS1.device_id = ?', array($ifIndex,$ifIndex,$device_id));
+
+    return isset($return_index["ifIndex"]) ? true : false;
 }
 
 function scan_new_plugins()

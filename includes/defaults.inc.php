@@ -898,6 +898,12 @@ $config['distributed_poller_memcached_port'] = '11211';
 //  aggregates can be created from multiple other aggregates
 // $config['custom_aggregation'][] = ['SFO Customers' => ['Customer #1 Ports', 'Customer #2 Ports']];
 
+
+// Show all interfaces
+// Set to 1 in order to suppress displaying and polling of lag member subifs
+// Example: xe-0/0/0.340 will not appear if xe-0/0/0 is part of a LAG
+$config['ignore_lag_member_subifs'] = 0;
+
 // Stats callback system
 $config['callback_post']  = 'https://stats.librenms.org/log.php';
 $config['callback_clear'] = 'https://stats.librenms.org/clear.php';
