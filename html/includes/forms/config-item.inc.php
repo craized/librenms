@@ -56,6 +56,8 @@ if ($action == 'remove' || preg_match('/^remove-.*$/', $action)) {
                 dbDelete('config', "`config_name` LIKE 'alert.transports.hipchat.$config_id.%'");
             } elseif ($action == 'remove-pushover') {
                 dbDelete('config', "`config_name` LIKE 'alert.transports.pushover.$config_id.%'");
+            } elseif ($action == 'remove-shellexec') {
+                dbDelete('config', "`config_name` LIKE 'alert.transports.shellexec.$config_id.%'");
             } elseif ($action == 'remove-boxcar') {
                 dbDelete('config', "`config_name` LIKE 'alert.transports.boxcar.$config_id.%'");
             } elseif ($action == 'remove-telegram') {
@@ -162,7 +164,7 @@ if ($action == 'remove' || preg_match('/^remove-.*$/', $action)) {
         $config_id = dbInsert(array('config_name' => 'alert.transports.pushover.', 'config_value' => $config_value, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $config_value, 'config_descr' => 'Pushover Transport'), 'config');
         if ($config_id > 0) {
             dbUpdate(array('config_name' => 'alert.transports.pushover.'.$config_id.'.appkey'), 'config', 'config_id=?', array($config_id));
-            $additional_id['userkey'] = dbInsert(array('config_name' => 'alert.transports.pushover.'.$config_id.'.userkey', 'config_value' => $config_userkey, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $config_userkey, 'config_descr' => 'Pushver Userkey'), 'config');
+            $additional_id['userkey'] = dbInsert(array('config_name' => 'alert.transports.pushover.'.$config_id.'.userkey', 'config_value' => $config_userkey, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $config_userkey, 'config_descr' => 'Pushover Userkey'), 'config');
             $status                   = 'ok';
             $message                  = 'Config item created';
             $extras                   = explode('\n', $config_extra);
@@ -172,6 +174,24 @@ if ($action == 'remove' || preg_match('/^remove-.*$/', $action)) {
                     dbInsert(array('config_name' => 'alert.transports.pushover.'.$config_id.'.'.$k, 'config_value' => $v, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $v, 'config_descr' => 'Pushover '.$v), 'config');
                 }
             }
+        } else {
+            $message = 'Could not create config item';
+        }
+    }
+} elseif ($action == 'add-shellexec') {
+    $config_path = $_POST['config_path'];
+    if (empty($config_value) || empty($config_path)) {
+        $message = 'No shellexec identifier or path provided';
+    } elseif (!file_exists($config_path)) {
+        $message = "$config_path does not exist on local file system";
+    } else {
+        $config_id = dbInsert(array('config_name' => 'alert.transports.shellexec.', 'config_value' => $config_value, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $config_value, 'config_descr' => 'ShellExec Transport'), 'config');
+        if ($config_id > 0) {
+            dbUpdate(array('config_name' => 'alert.transports.shellexec.'.$config_id.'.appkey'), 'config', 'config_id=?', array($config_id));
+            $additional_id['path'] = dbInsert(array('config_name' => 'alert.transports.shellexec.'.$config_id.'.path', 'config_value' => $config_path, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $config_extra, 'config_descr' => 'ShellExec Script Path'), 'config');
+            $additional_id['extra'] = dbInsert(array('config_name' => 'alert.transports.shellexec.'.$config_id.'.extra', 'config_value' => $config_extra, 'config_group' => $config_group, 'config_sub_group' => $config_sub_group, 'config_default' => $config_extra, 'config_descr' => 'ShellExec Command Line Options'), 'config');
+            $status                   = 'ok';
+            $message                  = 'Config item created';
         } else {
             $message = 'Could not create config item';
         }
