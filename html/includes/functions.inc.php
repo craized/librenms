@@ -1686,6 +1686,27 @@ function generate_stacked_graphs($transparency = '88')
 }
 
 /**
+ * Return the configured host_groups group name or the configured default
+ * $hostname is a string matching the exact port hostname
+**/
+function get_host_group_for_hostname($hostname)
+{
+    $default_host_group = Config::get('default_host_group');
+    if (!Config::Get('split_host_groups')) {
+        return $default_host_group;
+    }
+    $host_groups = Config::get('host_groups');
+    if ($host_groups) {
+        foreach ($host_groups as $host_group => $hname_array) {
+            if (array_search($hostname, $hname_array)) {
+                return $host_group;
+            }
+        }
+    }
+    return $default_host_group;
+}
+
+/**
  * Get the ZFS pools for a device... just requires the device ID
  * an empty return means ZFS is not in use or there are currently no pools
  * @param $device_id

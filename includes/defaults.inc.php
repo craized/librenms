@@ -884,6 +884,13 @@ $config['distributed_poller_group']          = 0;
 $config['distributed_poller_memcached_host'] = 'example.net';
 $config['distributed_poller_memcached_port'] = '11211';
 
+// Split iftype graphs for multiple networks/regions
+$config['split_host_groups'] = 0;
+$config['default_host_group'] = 'All';
+// Example configuration to split hosts into the default group, plus
+// $config['host_groups']['Southern Region'][] = 'socal.host1.network.com';
+// $config['host_groups']['Southern Region'][] = 'socal.host2.network.com';
+
 // Custom port aggregations
 // Interfaces are described as '<host>:port:port:port,<otherhost>:port:port'
 // Host has implicit % on the end, so short hostnames will work (careful though)
