@@ -1,0 +1,1975 @@
+-- **************************************************************
+-- CERENT-15216-EDFA-GENERIC-MIB module
+--
+-- This module contains the objects and events for the
+-- Cisco ONS 15216 EDFA devices.
+-- This module supports the following devices:
+--      1. EDFA3
+-- **************************************************************
+-- Copyright (c) 2003 by Cisco Systems, Inc.
+-- All rights reserved.
+-- **************************************************************
+
+CERENT-15216-EDFA-GENERIC-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+        cerentModules,
+        cerentProducts
+                FROM CERENT-GLOBAL-REGISTRY
+        DisplayString,
+        RowStatus,
+        TruthValue,
+        DateAndTime
+                FROM SNMPv2-TC
+        OBJECT-GROUP,
+        NOTIFICATION-GROUP
+                FROM SNMPv2-CONF
+        MODULE-IDENTITY,
+        OBJECT-IDENTITY,
+        OBJECT-TYPE,
+        NOTIFICATION-TYPE,
+        Counter32,
+        Integer32,
+        IpAddress
+                FROM SNMPv2-SMI
+        CerentNotificationClass
+                FROM CERENT-TC;
+
+cerent15216EdfaGenericMibModule MODULE-IDENTITY
+        LAST-UPDATED "200310090000Z"
+        ORGANIZATION "Cisco Systems, Inc."
+        CONTACT-INFO
+                "Support@Cisco.Com
+
+                Postal: Cisco Systems, Inc.
+                1435 North McDowell Blvd.
+                Petaluma CA 94954
+
+                Tel: +1.877.323.7368"
+        DESCRIPTION
+                "This module provides the MIB definitions for
+                managing ONS 15216 EDFA devices.
+
+                The following devices are supported.
+
+                     1. ONS 15216 EDFA3
+                "
+
+        REVISION "200310090000Z"
+        DESCRIPTION
+                 "
+                 Changing the min/max of the following objects.
+
+                                         Def      Min      Max
+                                         ---      ---      ---
+                 LINE1TXPwrTHFailLow     -60     -100      140
+                 LINE1TXPwrSetpoint      100      -70      170
+                 LINE1TXPwrTHDegHigh     120      -50      190
+                 LINE1TXPwrTHDegLow       80      -90      150
+                 CaseTempMax              65       60      100
+                 CaseTempMin              -5      -10       30
+                 PwrBusVoltageMax         57       49       70
+                 PwrBusVoltageMin         40        0       47
+                 "
+
+        REVISION "200309060000Z"
+        DESCRIPTION
+                 "line2RxPwrThFailLow range corrected."
+
+        REVISION "200309040000Z"
+        DESCRIPTION
+                "line1RxPwrThFailLow and
+                 line2RxPwrThFailLow range modified."
+        REVISION "200308211601Z"
+        DESCRIPTION
+                "Added temp and laserbias for stage 2."
+        REVISION "200308081116Z"
+        DESCRIPTION
+                "Added current Bus A & B voltage objs to pwr alarms."
+        REVISION "200308061200Z"
+        DESCRIPTION
+                "Modified the Descriptors based on comments from
+                vendor."
+        REVISION "200308011536Z"
+        DESCRIPTION
+                "Updated the module to comply with
+                Functional Specs Revision 13"
+        REVISION "200307031536Z"
+        DESCRIPTION
+                "Updated the module to comply with
+                Functional Specs Revision 10 (July 3, 2003)"
+        ::= { cerentModules 61 }
+
+
+cerent15216EdfaGenericMib OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerentProducts 31 }
+
+cerent15216EdfaGenericConformance OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericMib 10 }
+
+cerent15216EdfaGenericObjectGroups OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericConformance 10 }
+
+cerent15216EdfaGenericGenericGroup OBJECT-GROUP
+        OBJECTS {
+                cerent15216EdfaGenericOprnsOwner,
+                cerent15216EdfaGenericOprnsResult,
+                cerent15216EdfaGenericOprnsMode,
+                cerent15216EdfaGenericOprnsSrcFileLoc,
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnType,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericNotifDestnStatus,
+                cerent15216EdfaGenericNotifDestnVersion,
+                cerent15216EdfaGenericNotifDestnPort,
+                cerent15216EdfaGenericNotifDestnCommName,
+                cerent15216EdfaGenericSoftwareName,
+                cerent15216EdfaGenericSoftwareStatus,
+                cerent15216EdfaGenericCleiCode,
+                cerent15216EdfaGenericIpDefaultGateway,
+                cerent15216EdfaGenericIpNetMask,
+                cerent15216EdfaGenericIpAddress,
+                cerent15216EdfaGenericSentNotifications,
+                cerent15216EdfaGenericNodeTime,
+                cerent15216EdfaGenericEnableSetRequestProcessing,
+                cerent15216EdfaGenericSoftwareTimeStamp,
+                cerent15216EdfaGenericOprnsDestFileLoc,
+                cerent15216EdfaGenericEnableNotification,
+                cerent15216EdfaGenericStandingCondnVariableOneOid,
+                cerent15216EdfaGenericStandingCondnVariableOneValue,
+                cerent15216EdfaGenericStandingCondnVariableTwoOid,
+                cerent15216EdfaGenericStandingCondnVariableTwoValue,
+                cerent15216EdfaGenericEventProfileEvent,
+                cerent15216EdfaGenericEventProfileState,
+                cerent15216EdfaGenericEventProfileEventInhibit }
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericObjectGroups 10 }
+
+cerent15216EdfaGenericEdfa3ObjectsGroup OBJECT-GROUP
+        OBJECTS {
+                cerent15216EdfaGenericEdfa3AmpLaserStatus,
+                cerent15216EdfaGenericEdfa3DcuLoss,
+                cerent15216EdfaGenericEdfa3GainSetpoint,
+                cerent15216EdfaGenericEdfa3GainThDegHigh,
+                cerent15216EdfaGenericEdfa3Line1RxPwr,
+                cerent15216EdfaGenericEdfa3GainThDegLow,
+                cerent15216EdfaGenericEdfa3Line1RxPwrThFailLow,
+                cerent15216EdfaGenericEdfa3Line1TxPwr,
+                cerent15216EdfaGenericEdfa3Line1TxPwrSetpoint,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThDegHigh,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThDegLow,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThFailLow,
+                cerent15216EdfaGenericEdfa3Line2RxPwr,
+                cerent15216EdfaGenericEdfa3Line2RxPwrThFailLow,
+                cerent15216EdfaGenericEdfa3Line2TxPwr,
+                cerent15216EdfaGenericEdfa3Gain,
+                cerent15216EdfaGenericEdfa3Osri,
+                cerent15216EdfaGenericEdfa3PwrBusMode,
+                cerent15216EdfaGenericEdfa3PwrOffset,
+                cerent15216EdfaGenericEdfa3Tilt,
+                cerent15216EdfaGenericEdfa3TiltOffset,
+                cerent15216EdfaGenericEdfa3ControlMode,
+                cerent15216EdfaGenericEdfa3TiltSetpoint,
+                cerent15216EdfaGenericEdfa3CaseTemperature,
+                cerent15216EdfaGenericEdfa3FiberTemperature,
+                cerent15216EdfaGenericEdfa3PumpOneTemperature,
+                cerent15216EdfaGenericEdfa3LaserBiasOne,
+                cerent15216EdfaGenericEdfa3VOA,
+                cerent15216EdfaGenericEdfa3PwrBusAvoltage,
+                cerent15216EdfaGenericEdfa3PwrBusBvoltage,
+                cerent15216EdfaGenericEdfa3PwrBusVoltageMin,
+                cerent15216EdfaGenericEdfa3PwrBusVoltageMax,
+                cerent15216EdfaGenericEdfa3CaseTempMin,
+                cerent15216EdfaGenericEdfa3CaseTempMax,
+                cerent15216EdfaGenericEdfa3PumpTwoTemperature,
+                cerent15216EdfaGenericEdfa3LaserBiasTwo }
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericObjectGroups 20 }
+
+cerent15216EdfaGenericCompliance OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericConformance 20 }
+
+cerent15216EdfaGenericNotificationGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericConformance 30 }
+
+cerent15216EdfaGenericNotificationsGroup NOTIFICATION-GROUP
+        NOTIFICATIONS {
+                cerent15216EdfaGenericTrap,
+                cerent15216EdfaGenericSoftwareDownloadFailed,
+                cerent15216EdfaGenericEventProfileChanged }
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotificationGroup 10 }
+
+cerent15216EdfaGenericEdfa3NotificationsGroup NOTIFICATION-GROUP
+        NOTIFICATIONS {
+                cerent15216EdfaGenericEdfa3PwrAlarmBusA,
+                cerent15216EdfaGenericEdfa3PwrAlarmBusB,
+                cerent15216EdfaGenericEdfa3FreeMemoryOnSystemVeryLow,
+                cerent15216EdfaGenericEdfa3FFSCapacityVeryLow,
+                cerent15216EdfaGenericEdfa3EqptFailure,
+                cerent15216EdfaGenericEdfa3ModuleCommFailure,
+                cerent15216EdfaGenericEdfa3CaseTempOutOfRange,
+                cerent15216EdfaGenericEdfa3FiberTempOutOfRange,
+                cerent15216EdfaGenericEdfa3ExcessivePumpOneTemperature,
+                cerent15216EdfaGenericEdfa3LaserBiasOneDegrade,
+                cerent15216EdfaGenericEdfa3LaserBiasOneFail,
+                cerent15216EdfaGenericEdfa3PwrFailureLowLine1Rx,
+                cerent15216EdfaGenericEdfa3GainDegradeHigh,
+                cerent15216EdfaGenericEdfa3GainDegradeLow,
+                cerent15216EdfaGenericEdfa3PwrFailLowLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrDegradeHighLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrDegradeLowLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrFailLowLine2Rx,
+                cerent15216EdfaGenericEdfa3VoaDegradeHigh,
+                cerent15216EdfaGenericEdfa3VoaDegradeLow,
+                cerent15216EdfaGenericEdfa3VoaFailHigh,
+                cerent15216EdfaGenericEdfa3ControlModeChanged,
+                cerent15216EdfaGenericEdfa3GainSetpointChanged,
+                cerent15216EdfaGenericEdfa3GainDegradeLowThresholdChanged,
+                cerent15216EdfaGenericEdfa3GainDegradeHighThresholdChanged,
+                cerent15216EdfaGenericEdfa3OutputPwrOffsetChanged,
+                cerent15216EdfaGenericEdfa3PwrsetpointChangedLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrDegradeLowThresholdChangedLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrDegradeHighThresholdChangedLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrFailLowThresholdChangedLine1Tx,
+                cerent15216EdfaGenericEdfa3PwrFailLowThresholdChangedLine1Rx,
+                cerent15216EdfaGenericEdfa3PwrFailLowThresholdChangedLine2Rx,
+                cerent15216EdfaGenericEdfa3TiltSetpointChanged,
+                cerent15216EdfaGenericEdfa3TiltOffsetChanged,
+                cerent15216EdfaGenericEdfa3LaserStatusChanged,
+                cerent15216EdfaGenericEdfa3OsriChanged,
+                cerent15216EdfaGenericEdfa3DataIntegrityFault,
+                cerent15216EdfaGenericEdfa3ExcessivePumpTwoTemperature,
+                cerent15216EdfaGenericEdfa3LaserBiasTwoDegrade,
+                cerent15216EdfaGenericEdfa3LaserBiasTwoFail,
+                cerent15216EdfaGenericEdfa3CaseTempMaxChanged,
+                cerent15216EdfaGenericEdfa3CaseTempMinChanged,
+                cerent15216EdfaGenericEdfa3PwrBusVoltageMaxChanged,
+                cerent15216EdfaGenericEdfa3PwrBusVoltageMinChanged }
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericNotificationGroup 20 }
+
+cerent15216EdfaGenericObjectsAndEvents OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericMib 20 }
+
+cerent15216EdfaGenericGeneralGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericObjectsAndEvents 10 }
+
+--*******************************************************
+
+cerent15216EdfaGenericEnableNotification OBJECT-TYPE
+        SYNTAX TruthValue
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "By setting this object to enable/disable, the
+                management station can turn the notification 
+                generation from the device on or off.
+                "
+        ::= { cerent15216EdfaGenericGeneralGroup 10 }
+
+
+cerent15216EdfaGenericEnableSetRequestProcessing OBJECT-TYPE
+        SYNTAX TruthValue
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This object indicate if the device can be
+                provisioned through SNMP interface. If set to 
+                'disable', the device will reject all SNMP set 
+                requests.
+
+                This object cannot be provisioned through SNMP
+                interface for security reasons.
+                "
+        ::= { cerent15216EdfaGenericGeneralGroup 20 }
+
+
+cerent15216EdfaGenericNodeTime OBJECT-TYPE
+        SYNTAX DateAndTime
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "The wall clock time at the device."
+        ::= { cerent15216EdfaGenericGeneralGroup 30 }
+
+
+cerent15216EdfaGenericSentNotifications OBJECT-TYPE
+        SYNTAX Counter32
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "A count of v1+v2 notifications sent out
+                by the agent. Resets to zero after
+                cold/warm start.
+
+                NMS should use this to detect loss of
+                communication to device. Refer to 
+                Robust Trap delivery Mechanism in the
+                PRD for more details.
+                "
+        ::= { cerent15216EdfaGenericGeneralGroup 40 }
+
+
+cerent15216EdfaGenericIpAddress OBJECT-TYPE
+        SYNTAX IpAddress
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "The IP address of the device."
+        ::= { cerent15216EdfaGenericGeneralGroup 50 }
+
+
+cerent15216EdfaGenericIpNetMask OBJECT-TYPE
+        SYNTAX IpAddress
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Netmask used by the device."
+        ::= { cerent15216EdfaGenericGeneralGroup 60 }
+
+
+cerent15216EdfaGenericIpDefaultGateway OBJECT-TYPE
+        SYNTAX IpAddress
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Default gateway used by the device."
+        ::= { cerent15216EdfaGenericGeneralGroup 70 }
+
+
+cerent15216EdfaGenericCleiCode OBJECT-TYPE
+        SYNTAX OCTET STRING (SIZE (0..10))
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "CLEI code assigned to this device."
+        ::= { cerent15216EdfaGenericGeneralGroup 80 }
+
+
+--**********************************************************
+
+cerent15216EdfaGenericSoftwareTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF Cerent15216EdfaGenericSoftwareEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+                "This table shows what are the active and
+                standby software available in the 
+                Flash file system.
+                "
+        ::= { cerent15216EdfaGenericGeneralGroup 90 }
+
+
+cerent15216EdfaGenericSoftwareEntry OBJECT-TYPE
+        SYNTAX Cerent15216EdfaGenericSoftwareEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        INDEX {
+                cerent15216EdfaGenericSoftwareIndex }
+        ::= { cerent15216EdfaGenericSoftwareTable 1 }
+
+
+Cerent15216EdfaGenericSoftwareEntry ::= SEQUENCE {
+        cerent15216EdfaGenericSoftwareIndex     Integer32,
+        cerent15216EdfaGenericSoftwareStatus    INTEGER,
+        cerent15216EdfaGenericSoftwareName      DisplayString,
+        cerent15216EdfaGenericSoftwareTimeStamp DateAndTime }
+
+
+cerent15216EdfaGenericSoftwareIndex OBJECT-TYPE
+        SYNTAX Integer32 (1..2)
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericSoftwareEntry 10 }
+
+
+cerent15216EdfaGenericSoftwareStatus OBJECT-TYPE
+        SYNTAX INTEGER {
+                        active(10),
+                        standby(20) }
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This object indicates active/standby status of the software load.
+                "
+        ::= { cerent15216EdfaGenericSoftwareEntry 20 }
+
+
+cerent15216EdfaGenericSoftwareName OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "The name of the software load file in the flash."
+        ::= { cerent15216EdfaGenericSoftwareEntry 30 }
+
+
+cerent15216EdfaGenericSoftwareTimeStamp OBJECT-TYPE
+        SYNTAX DateAndTime
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This is the timestamp that indicates when
+                this software as copied on to the non-volatile
+                file system.
+                "
+        ::= { cerent15216EdfaGenericSoftwareEntry 40 }
+
+
+cerent15216EdfaGenericEventGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This group contains,
+                - a set of Notification definitions
+                - a table to provision/set notification destinations
+                - a table containing all the log of all notifications dispatched by the node
+                - a table which provides info on current standing alarm/conditions on the node
+                "
+        ::= { cerent15216EdfaGenericObjectsAndEvents 20 }
+
+cerent15216EdfaGenericEventTypes OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This is a catalog of all the possible generic
+                events that an EDFA device can dispatch. 
+                Not all events need to be supported in every
+                EDFA device."
+        ::= { cerent15216EdfaGenericEventGroup 10 }
+
+cerent15216EdfaGenericUnknown OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This is a catch-all-unknown event."
+        ::= { cerent15216EdfaGenericEventTypes 1 }
+
+cerent15216EdfaGenericSystemConfigChanged OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventTypes 10 }
+
+cerent15216EdfaGenericSoftwareReset OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventTypes 20 }
+
+cerent15216EdfaGenericSoftwareDownloadComplete OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventTypes 30 }
+
+cerent15216EdfaGenericResetAfterCutover OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventTypes 50 }
+
+cerent15216EdfaGenericSoftwareDownloadInProgress OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventTypes 60 }
+
+cerent15216EdfaGenericBackupRestoreInProgress OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventTypes 70 }
+
+cerent15216EdfaGenericNotifDestnTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF Cerent15216EdfaGenericNotifDestnEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+                "This table will support upto 10 Notification
+                destinations. Hence the index value for this 
+                table is bound by (1..10)"
+        ::= { cerent15216EdfaGenericEventGroup 20 }
+
+
+cerent15216EdfaGenericNotifDestnEntry OBJECT-TYPE
+        SYNTAX Cerent15216EdfaGenericNotifDestnEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        INDEX {
+                cerent15216EdfaGenericNotifDestnIpAddr }
+        ::= { cerent15216EdfaGenericNotifDestnTable 1 }
+
+
+Cerent15216EdfaGenericNotifDestnEntry ::= SEQUENCE {
+        cerent15216EdfaGenericNotifDestnIpAddr   IpAddress,
+        cerent15216EdfaGenericNotifDestnCommName OCTET STRING,
+        cerent15216EdfaGenericNotifDestnPort     Integer32,
+        cerent15216EdfaGenericNotifDestnVersion  INTEGER,
+        cerent15216EdfaGenericNotifDestnStatus   RowStatus }
+
+
+cerent15216EdfaGenericNotifDestnIpAddr OBJECT-TYPE
+        SYNTAX IpAddress
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotifDestnEntry 20 }
+
+
+cerent15216EdfaGenericNotifDestnCommName OBJECT-TYPE
+        SYNTAX OCTET STRING (SIZE (0..64))
+        MAX-ACCESS read-create
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotifDestnEntry 30 }
+
+
+cerent15216EdfaGenericNotifDestnPort OBJECT-TYPE
+        SYNTAX Integer32
+        MAX-ACCESS read-create
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotifDestnEntry 40 }
+
+
+cerent15216EdfaGenericNotifDestnVersion OBJECT-TYPE
+        SYNTAX INTEGER {
+                        snmpV1(10),
+                        snmpV2(20),
+                        unknown(1) }
+        MAX-ACCESS read-create
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotifDestnEntry 50 }
+
+
+cerent15216EdfaGenericNotifDestnStatus OBJECT-TYPE
+        SYNTAX RowStatus
+        MAX-ACCESS read-create
+        STATUS current
+        DESCRIPTION
+                "From SNMPv2-TC:
+                1 - active
+                2 - notInService
+                3 - notReady
+                4 - createAndGo
+                5 - creatAndWait
+                6 - destroy
+                "
+        ::= { cerent15216EdfaGenericNotifDestnEntry 60 }
+
+
+cerent15216EdfaGenericStandingCondnTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF Cerent15216EdfaGenericStandingCondnEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventGroup 30 }
+
+
+cerent15216EdfaGenericStandingCondnEntry OBJECT-TYPE
+        SYNTAX Cerent15216EdfaGenericStandingCondnEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+                "A table of non-trancient conditions that
+                exist in the system at any current time. 
+
+                Whenever a non-trancient alarm/condition 
+                is raised in the system, the new row will be 
+                added to this table, with appropriate values, 
+                to indicate the alarm/condition. Whenever 
+                this alarm/condition is cleared, the 
+                corresponding row will be deleted.
+                "
+        INDEX {
+                cerent15216EdfaGenericStandingCondnIndex }
+        ::= { cerent15216EdfaGenericStandingCondnTable 1 }
+
+
+Cerent15216EdfaGenericStandingCondnEntry ::= SEQUENCE {
+        cerent15216EdfaGenericStandingCondnIndex            Integer32,
+        cerent15216EdfaGenericStandingCondnTimeStamp        DateAndTime,
+        cerent15216EdfaGenericStandingCondnType             OBJECT IDENTIFIER,
+        cerent15216EdfaGenericStandingCondnState            CerentNotificationClass,
+        cerent15216EdfaGenericStandingCondnVariableOneOid   OBJECT IDENTIFIER,
+        cerent15216EdfaGenericStandingCondnVariableOneValue Integer32,
+        cerent15216EdfaGenericStandingCondnVariableTwoOid   OBJECT IDENTIFIER,
+        cerent15216EdfaGenericStandingCondnVariableTwoValue Integer32 }
+
+
+cerent15216EdfaGenericStandingCondnIndex OBJECT-TYPE
+        SYNTAX Integer32 (1..1023)
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericStandingCondnEntry 10 }
+
+
+cerent15216EdfaGenericStandingCondnTimeStamp OBJECT-TYPE
+        SYNTAX DateAndTime
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericStandingCondnEntry 20 }
+
+
+cerent15216EdfaGenericStandingCondnType OBJECT-TYPE
+        SYNTAX OBJECT IDENTIFIER
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This object indicates the type of alarm
+                condition itself.
+                "
+        ::= { cerent15216EdfaGenericStandingCondnEntry 30 }
+
+
+cerent15216EdfaGenericStandingCondnState OBJECT-TYPE
+        SYNTAX CerentNotificationClass
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericStandingCondnEntry 40 }
+
+
+cerent15216EdfaGenericStandingCondnVariableOneOid OBJECT-TYPE
+        SYNTAX OBJECT IDENTIFIER
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Depending on the condition type, this
+                object may or may not be instantiated."
+        ::= { cerent15216EdfaGenericStandingCondnEntry 50 }
+
+
+cerent15216EdfaGenericStandingCondnVariableOneValue OBJECT-TYPE
+        SYNTAX Integer32
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Depending on the condition type, this
+                object may or may not be instantiated."
+        ::= { cerent15216EdfaGenericStandingCondnEntry 60 }
+
+
+cerent15216EdfaGenericStandingCondnVariableTwoOid OBJECT-TYPE
+        SYNTAX OBJECT IDENTIFIER
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Depending on the condition type, this
+                object may or may not be instantiated."
+        ::= { cerent15216EdfaGenericStandingCondnEntry 70 }
+
+
+cerent15216EdfaGenericStandingCondnVariableTwoValue OBJECT-TYPE
+        SYNTAX Integer32
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Depending on the condition type, this
+                object may or may not be instantiated."
+        ::= { cerent15216EdfaGenericStandingCondnEntry 80 }
+
+
+cerent15216EdfaGenericEventProfileTable OBJECT-TYPE
+        SYNTAX SEQUENCE OF Cerent15216EdfaGenericEventProfileEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION
+                "This table enables the users to read and
+                modify the severity associated to the traps. 
+                A specific event (eventProfileChanged) will be 
+                generated to indicate a change in any
+                row in this table.
+
+                There will be one row for each of the trap
+                that are defined for the EDFA device."
+        ::= { cerent15216EdfaGenericEventGroup 40 }
+
+
+cerent15216EdfaGenericEventProfileEntry OBJECT-TYPE
+        SYNTAX Cerent15216EdfaGenericEventProfileEntry
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        INDEX {
+                cerent15216EdfaGenericEventProfileIndex }
+        ::= { cerent15216EdfaGenericEventProfileTable 1 }
+
+
+Cerent15216EdfaGenericEventProfileEntry ::= SEQUENCE {
+        cerent15216EdfaGenericEventProfileIndex        Integer32,
+        cerent15216EdfaGenericEventProfileEvent        OBJECT IDENTIFIER,
+        cerent15216EdfaGenericEventProfileState        CerentNotificationClass,
+        cerent15216EdfaGenericEventProfileEventInhibit TruthValue }
+
+
+cerent15216EdfaGenericEventProfileIndex OBJECT-TYPE
+        SYNTAX Integer32 (1..511)
+        MAX-ACCESS not-accessible
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventProfileEntry 10 }
+
+
+cerent15216EdfaGenericEventProfileEvent OBJECT-TYPE
+        SYNTAX OBJECT IDENTIFIER
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This is the OID of the event whose profile is
+                represented in this row.
+                "
+        ::= { cerent15216EdfaGenericEventProfileEntry 20 }
+
+
+cerent15216EdfaGenericEventProfileState OBJECT-TYPE
+        SYNTAX CerentNotificationClass
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "This will indicate what is the class of the event being sent out.
+
+                That is,
+                 - notReported - condition not reported as trap
+                 - administrative - Informational trap (e.g., IETF trap)
+                 - notAlarmedNonServiceAffecting
+                 - non-alarmable event & not service affecting
+                 - notAlarmedServiceAffecting
+                 - non-alarmable event but service affecting
+                 - cleared - This alarm has been cleared.
+                 - minorNonServiceAffecting - minor & NSA
+                 - majorNonServiceAffecting - major & NSA
+                 - criticalNonServiceAffecting - critical & NSA
+                 - minorServiceAffecting - minor & SA
+                 - majorServiceAffecting - major & SA
+                 - criticalServiceAffecting - critical & SA
+                 - other"
+        ::= { cerent15216EdfaGenericEventProfileEntry 30 }
+
+
+cerent15216EdfaGenericEventProfileEventInhibit OBJECT-TYPE
+        SYNTAX TruthValue
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "When the value of this object is 'false',
+                the event will be dispatched as specified
+                in the mib module.
+
+                When the value of this object is 'true',
+                dispatch of this event will be inhibited.
+
+                The default value will be 'false'."
+        ::= { cerent15216EdfaGenericEventProfileEntry 40 }
+
+
+cerent15216EdfaGenericEvents OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEventGroup 100 }
+
+cerent15216EdfaGenericNotifications OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEvents 0 }
+
+
+cerent15216EdfaGenericTrap NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnType,
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotifications 10 }
+
+
+cerent15216EdfaGenericSoftwareDownloadFailed NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericOprnsResult}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericNotifications 20 }
+
+
+cerent15216EdfaGenericEventProfileChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEventProfileEvent,
+                cerent15216EdfaGenericEventProfileState}
+        STATUS current
+        DESCRIPTION
+                "Whenever there is a change in the
+                cerent15216EdfaGenericEventProfileTable,
+                this trap will be dispatched from the node.
+
+                Variable Binding value cerent15216EdfaGenericEventProfileState is
+                the current event severity of cerent15216EdfaGenericEventProfileEvent.
+                "
+        ::= { cerent15216EdfaGenericNotifications 30 }
+
+cerent15216EdfaGenericLogGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericObjectsAndEvents 30 }
+
+cerent15216EdfaGenericOprnsGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericObjectsAndEvents 40 }
+
+cerent15216EdfaGenericOprnsSrcFileLoc OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "The fully qualified file name used in the
+                transfer operations. This file is used as the
+                source file in the transfer operations.
+
+                The object is used to specify userid, password,
+                the server IP address and the name
+                of the software file including the full directory
+                path.
+
+                The format of the data is identical to what is
+                used by HTTP browsers for FTP operations.
+
+                Refer to appropriate documentation for more
+                details.
+
+                E.g. ftp://loginname:password@172.68.46.10/home/allBuilds/15216/pkg/15216/15216-0500-X03C-1017.pkg
+
+                In the above example,
+
+                    loginname -> userId used for login into server.
+                    password  -> password for the above userId.
+                    172.68.46.10 -> IP address of the server.
+                   /home/allBuilds/15216/pkg/15216/ -> The directory in the server where the software is located.
+                  15216-0500-X03C-1017.pkg -> The file name of the software.
+
+                In case of anonymous ftp, the userid and the password could
+                be omitted."
+        ::= { cerent15216EdfaGenericOprnsGroup 10 }
+
+
+cerent15216EdfaGenericOprnsMode OBJECT-TYPE
+        SYNTAX INTEGER {
+                        idle(1),
+                        rebooting(2),
+                        applyingCutover(3),
+                        downloading(4),
+                        savingFile(5),          -- to remote location from node
+                        restoringFile(6)        -- from remote location to node
+                        }
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Once the remote location and the file names
+                are provisioned, then setting this value to 
+                appropriate mode will commence the 
+                selected operation."
+        ::= { cerent15216EdfaGenericOprnsGroup 20 }
+
+
+cerent15216EdfaGenericOprnsResult OBJECT-TYPE
+        SYNTAX INTEGER {
+                        none(1),
+                        success(10),
+                        connectionTimedOut(20),
+                        fileReadError(30),
+                        fileWriteError(40),
+                        noStandbySoftware(50) }
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This object indicates the end result of the
+                operation.
+
+                When any of the following object is changed,
+                the value of this object is reset to 'none' by 
+                the snmp agent.
+
+                cerent15216EdfaGenericOprnsSrcfileLoc
+                cerent15216EdfaGenericOprnsmode
+                cerent15216EdfaGenericOprnsowner
+                cerent15216EdfaGenericOprnsDestfileLoc
+
+                As soon as the operation is completed, then the
+                resulting status is reflected in this object.
+
+                "
+        ::= { cerent15216EdfaGenericOprnsGroup 30 }
+
+
+cerent15216EdfaGenericOprnsOwner OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "The management station which intends to
+                commence an operation should set this 
+                object to an unique string as the first step.
+
+                As soon as the operation is complete, the
+                management station should set this back to
+                a null string. 
+
+                This would enable multiple management 
+                stations to co-ordinate their operations on 
+                this device among themselves.
+
+                "
+        ::= { cerent15216EdfaGenericOprnsGroup 40 }
+
+
+cerent15216EdfaGenericOprnsDestFileLoc OBJECT-TYPE
+        SYNTAX DisplayString
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "The fully qualified file name used in the
+                transfer operations. This file is used as the
+                destination file in the transfer operations.
+
+                The object is used to specify the name
+                of the software file including the full directory
+                path.
+
+                E.g. /flash1/dcom.drv
+
+                In the above example,
+
+                       /flash1/ -> The directory in the node where the file 
+                                          should be copied.
+                  dcom.drv -> The name of the file being copied.
+                "
+        ::= { cerent15216EdfaGenericOprnsGroup 50 }
+
+
+cerent15216EdfaGenericEdfa3Group OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericObjectsAndEvents 50 }
+
+cerent15216EdfaGenericEdfa3Events OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "Catalog of events that can be dispatched
+                by EDFA3 device. If defined, it should be
+                supported by the device."
+        ::= { cerent15216EdfaGenericEdfa3Group 10 }
+
+cerent15216EdfaGenericEdfa3Notifications OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Events 0 }
+
+
+cerent15216EdfaGenericEdfa3PwrAlarmBusA NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PwrBusAvoltage}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 1 }
+
+
+cerent15216EdfaGenericEdfa3PwrAlarmBusB NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PwrBusBvoltage}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 2 }
+
+
+cerent15216EdfaGenericEdfa3FreeMemoryOnSystemVeryLow NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 3 }
+
+
+cerent15216EdfaGenericEdfa3FFSCapacityVeryLow NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 4 }
+
+
+cerent15216EdfaGenericEdfa3EqptFailure NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 5 }
+
+
+cerent15216EdfaGenericEdfa3ModuleCommFailure NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 6 }
+
+
+cerent15216EdfaGenericEdfa3CaseTempOutOfRange NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3CaseTemperature}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 7 }
+
+
+cerent15216EdfaGenericEdfa3FiberTempOutOfRange NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3FiberTemperature}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 8 }
+
+
+cerent15216EdfaGenericEdfa3ExcessivePumpOneTemperature NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PumpOneTemperature}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 9 }
+
+
+cerent15216EdfaGenericEdfa3LaserBiasOneDegrade NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3LaserBiasOne}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 10 }
+
+
+cerent15216EdfaGenericEdfa3LaserBiasOneFail NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3LaserBiasOne}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 11 }
+
+
+cerent15216EdfaGenericEdfa3PwrFailureLowLine1Rx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1RxPwr,
+                cerent15216EdfaGenericEdfa3Line1RxPwrThFailLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 12 }
+
+
+cerent15216EdfaGenericEdfa3GainDegradeHigh NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Gain,
+                cerent15216EdfaGenericEdfa3GainThDegHigh}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 13 }
+
+
+cerent15216EdfaGenericEdfa3GainDegradeLow NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Gain,
+                cerent15216EdfaGenericEdfa3GainThDegLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 14 }
+
+
+cerent15216EdfaGenericEdfa3PwrFailLowLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwr,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThFailLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 15 }
+
+
+cerent15216EdfaGenericEdfa3PwrDegradeHighLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwr,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThDegHigh}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 16 }
+
+
+cerent15216EdfaGenericEdfa3PwrDegradeLowLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwr,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThDegLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 17 }
+
+
+cerent15216EdfaGenericEdfa3PwrFailLowLine2Rx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line2RxPwr,
+                cerent15216EdfaGenericEdfa3Line2RxPwrThFailLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 18 }
+
+
+cerent15216EdfaGenericEdfa3VoaDegradeHigh NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3VOA}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 19 }
+
+
+cerent15216EdfaGenericEdfa3VoaDegradeLow NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3VOA}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 20 }
+
+
+cerent15216EdfaGenericEdfa3VoaFailHigh NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3VOA}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 21 }
+
+
+cerent15216EdfaGenericEdfa3ControlModeChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3ControlMode}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 22 }
+
+
+cerent15216EdfaGenericEdfa3GainSetpointChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3GainSetpoint}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 23 }
+
+
+cerent15216EdfaGenericEdfa3GainDegradeLowThresholdChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3GainThDegLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 24 }
+
+
+cerent15216EdfaGenericEdfa3GainDegradeHighThresholdChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3GainThDegHigh}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 25 }
+
+
+cerent15216EdfaGenericEdfa3OutputPwrOffsetChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PwrOffset}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 26 }
+
+
+cerent15216EdfaGenericEdfa3PwrsetpointChangedLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwrSetpoint}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 27 }
+
+
+cerent15216EdfaGenericEdfa3PwrDegradeLowThresholdChangedLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThDegLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 28 }
+
+
+cerent15216EdfaGenericEdfa3PwrDegradeHighThresholdChangedLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThDegHigh}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 29 }
+
+
+cerent15216EdfaGenericEdfa3PwrFailLowThresholdChangedLine1Tx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1TxPwrThFailLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 30 }
+
+
+cerent15216EdfaGenericEdfa3PwrFailLowThresholdChangedLine1Rx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line1RxPwrThFailLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 31 }
+
+
+cerent15216EdfaGenericEdfa3PwrFailLowThresholdChangedLine2Rx NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Line2RxPwrThFailLow}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 32 }
+
+
+cerent15216EdfaGenericEdfa3TiltSetpointChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3TiltSetpoint}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 33 }
+
+
+cerent15216EdfaGenericEdfa3TiltOffsetChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3TiltOffset}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 34 }
+
+
+cerent15216EdfaGenericEdfa3LaserStatusChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3AmpLaserStatus}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 35 }
+
+
+cerent15216EdfaGenericEdfa3OsriChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3Osri}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 36 }
+
+
+cerent15216EdfaGenericEdfa3DataIntegrityFault NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp}
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 37 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusVoltageMaxChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PwrBusVoltageMax}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 38 }
+
+
+cerent15216EdfaGenericEdfa3ExcessivePumpTwoTemperature NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PumpTwoTemperature}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 39 }
+
+
+cerent15216EdfaGenericEdfa3LaserBiasTwoDegrade NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3LaserBiasTwo}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 40 }
+
+
+cerent15216EdfaGenericEdfa3LaserBiasTwoFail NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3LaserBiasTwo}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 41 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusVoltageMinChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3PwrBusVoltageMin}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 42 }
+
+
+cerent15216EdfaGenericEdfa3CaseTempMaxChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3CaseTempMax}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 43 }
+
+
+cerent15216EdfaGenericEdfa3CaseTempMinChanged NOTIFICATION-TYPE
+        OBJECTS {
+                cerent15216EdfaGenericStandingCondnState,
+                cerent15216EdfaGenericStandingCondnTimeStamp,
+                cerent15216EdfaGenericEdfa3CaseTempMin}
+        STATUS current
+        DESCRIPTION
+                ""
+        ::= { cerent15216EdfaGenericEdfa3Notifications 44 }
+
+cerent15216EdfaGenericEdfa3OpticalGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This group contains parameters related
+                to Optical input and output lines."
+        ::= { cerent15216EdfaGenericEdfa3Group 20 }
+
+cerent15216EdfaGenericEdfa3Line1RxPwr OBJECT-TYPE
+        SYNTAX Integer32 (-600..250)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Amplifier Input Power value related to the
+                LINE1RX Port."
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 10 }
+
+
+cerent15216EdfaGenericEdfa3Line1RxPwrThFailLow OBJECT-TYPE
+        SYNTAX Integer32 (-490..130)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Fail Low Threshold associated to the
+                Input Power value related to the LINE1RX 
+                Port."
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 20 }
+
+
+cerent15216EdfaGenericEdfa3Line2TxPwr OBJECT-TYPE
+        SYNTAX Integer32 (-600..250)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Mid Stage Access Output Power value
+                related to the LINE2TX Port."
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 30 }
+
+
+cerent15216EdfaGenericEdfa3Line2RxPwr OBJECT-TYPE
+        SYNTAX Integer32 (-600..250)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Mid Stage Access Input Power value
+                related to the LINE2RX Port."
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 40 }
+
+
+cerent15216EdfaGenericEdfa3Line2RxPwrThFailLow OBJECT-TYPE
+        SYNTAX Integer32 (-490..150)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Fail Low Threshold associated to the
+                Mid Stage Access Input Power related to the
+                LINE2RX Port.
+                "
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 50 }
+
+
+cerent15216EdfaGenericEdfa3Tilt OBJECT-TYPE
+        SYNTAX Integer32 (-150..150)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 60 }
+
+
+cerent15216EdfaGenericEdfa3TiltSetpoint OBJECT-TYPE
+        SYNTAX Integer32 (-150..150)
+        UNITS
+                "0.1dB"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION ""
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 70 }
+
+
+cerent15216EdfaGenericEdfa3TiltOffset OBJECT-TYPE
+        SYNTAX Integer32 (-200..200)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "TiltOffset parameter is used to compensate
+                for possible wavelength dependency of 
+                optical component placed at the output of 
+                the amplifier."
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 80 }
+
+
+cerent15216EdfaGenericEdfa3DcuLoss OBJECT-TYPE
+        SYNTAX Integer32 (0..200)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "DCULoss measures the insertion loss
+                of the Dispersion Compensating Unit  
+                located between stages."
+        ::= { cerent15216EdfaGenericEdfa3OpticalGroup 90 }
+
+
+cerent15216EdfaGenericEdfa3CtlModeGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This group is used to retrieve and configure
+                the EDFA3 operational mode.
+                "
+        ::= { cerent15216EdfaGenericEdfa3Group 30 }
+
+cerent15216EdfaGenericEdfa3ControlMode OBJECT-TYPE
+        SYNTAX INTEGER {
+                        constantOutputPower(1),
+                        constantGain(2) }
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "There are two Control Modes.
+                1) Constant Output Power mode: In
+                this mode it will be possible to set 
+                the EDFA3  LINE1TXPwrSetpoint.
+
+                2) Constant Gain mode: In this mode,
+                it will be possible to set the 
+                GainSetpoint of the whole amplifier. 
+
+                The internal Optical Module FW will set 
+                separately the Gain of the two stages."
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 10 }
+
+
+cerent15216EdfaGenericEdfa3Line1TxPwr OBJECT-TYPE
+        SYNTAX INTEGER (-600..250)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This is the amplifier output power value
+                related to the LINE1TX port.
+                "
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 20 }
+
+
+cerent15216EdfaGenericEdfa3Line1TxPwrThDegLow OBJECT-TYPE
+        SYNTAX Integer32 (-90..150)
+        UNITS
+                "0.1 dbm"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Degrade Low Threshold associated to the
+                Amplifier Output Power value related to the 
+                LINE1TX Port. The Threshold is only valid 
+                when amplifier is used in constant output 
+                power mode of operation.
+
+                In EDFA3: 
+                (1) This object will remain read-only.
+                (2) The default value of this object would
+                be 80.
+                "
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 30 }
+
+
+cerent15216EdfaGenericEdfa3Line1TxPwrSetpoint OBJECT-TYPE
+        SYNTAX INTEGER (-70..170)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Amplifier Output Power Setpoint value
+                related to the LINE1TX Port. The setpoint 
+                object is only valid when amplifier is used 
+                in constant output power mode of operation.
+
+                In EDFA3, the default value would be 100.
+                "
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 40 }
+
+
+cerent15216EdfaGenericEdfa3Line1TxPwrThDegHigh OBJECT-TYPE
+        SYNTAX INTEGER (-50..190)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Degrade High Threshold associated to
+                the Amplifier Output Power value related 
+                to the LINE1TX Port. The Threshold is 
+                only valid when amplifier is used in 
+                constant output power mode of operation.
+
+                In EDFA3:
+                (1) This object will remain read-only.
+                (2) The default value will be 120"
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 50 }
+
+
+cerent15216EdfaGenericEdfa3Line1TxPwrThFailLow OBJECT-TYPE
+        SYNTAX Integer32 (-100..140)
+        UNITS
+                "0.1 dBm"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Fail Low Threshold associated to the
+                Output Power value related to the 
+                LINE1TX Port.
+                
+                In EDFA3, the default value would be -60."
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 60 }
+
+
+cerent15216EdfaGenericEdfa3PwrOffset OBJECT-TYPE
+        SYNTAX Integer32 (-200..200)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "The Output Power Offset is the difference
+                between the output power measured at 
+                output photodiode and the Output Power 
+                in fiber. The PowerOffset includes power 
+                losses due to cabling or inserted 
+                attenuators.
+                "
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 70 }
+
+
+cerent15216EdfaGenericEdfa3Gain OBJECT-TYPE
+        SYNTAX Integer32 (0..400)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Gain Value."
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 80 }
+
+
+cerent15216EdfaGenericEdfa3GainSetpoint OBJECT-TYPE
+        SYNTAX Integer32 (50..385)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Gain Setpoint object is only valid when
+                amplifier is used in constant gain mode 
+                of operation.
+                "
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 90 }
+
+
+cerent15216EdfaGenericEdfa3GainThDegHigh OBJECT-TYPE
+        SYNTAX Integer32 (0..400)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Degrade High Threshold associated to the
+                Amplifier Gain.The Threshold is only valid 
+                when amplifier is used in constant gain 
+                mode of operation.
+
+                In EDFA3, this object will remain read-only."
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 100 }
+
+
+cerent15216EdfaGenericEdfa3GainThDegLow OBJECT-TYPE
+        SYNTAX Integer32 (0..400)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Degrade Low Threshold associated to the
+                Amplifier Gain. The Threshold is only valid 
+                when amplifier is used in constant gain 
+                mode of operation.
+
+                In EDFA3, this object will remain read-only."
+        ::= { cerent15216EdfaGenericEdfa3CtlModeGroup 110 }
+
+
+cerent15216EdfaGenericEdfa3AlscGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This group contains Amplifier Laser Status
+                and Optical Safety Remote Interlock related
+                objects.
+                "
+        ::= { cerent15216EdfaGenericEdfa3Group 40 }
+
+cerent15216EdfaGenericEdfa3AmpLaserStatus OBJECT-TYPE
+        SYNTAX INTEGER {
+                        off(1),
+                        on(2),
+                        automaticPwrReductionMode(3) }
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Amplifier Laser Status. Three possible states.
+                On: The two EDFA3 Lasers are on.
+                APR: The two Lasers are in the Automatic Power Reduction state.
+                Off: The two Lasers are off.
+                "
+        ::= { cerent15216EdfaGenericEdfa3AlscGroup 10 }
+
+
+cerent15216EdfaGenericEdfa3Osri OBJECT-TYPE
+        SYNTAX INTEGER {
+                        off(1),
+                        on(2) }
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Optical Safety Remote Interlock. Two
+                possible states.
+                     On: The Lasers remain off (i.e. 
+                     it locks the lasers switch on).
+                     Off: Default. No lock.
+                "
+        ::= { cerent15216EdfaGenericEdfa3AlscGroup 20 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "This group contains all Power Bus related
+                parameters.
+                "
+        ::= { cerent15216EdfaGenericEdfa3Group 50 }
+
+cerent15216EdfaGenericEdfa3PwrBusMode OBJECT-TYPE
+        SYNTAX INTEGER {
+                        simplex(1),
+                        duplex(2) }
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Simplex mode requires only power to BUS A.
+                 Duplex Mode requires power to both BUS A
+                and BUS B."
+        ::= { cerent15216EdfaGenericEdfa3PwrBusGroup 10 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusAvoltage OBJECT-TYPE
+        SYNTAX Integer32 (0..9999)
+        UNITS
+                "0.1 VDC"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This is DC voltage of the power bus A"
+        ::= { cerent15216EdfaGenericEdfa3PwrBusGroup 20 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusBvoltage OBJECT-TYPE
+        SYNTAX Integer32 (0..9999)
+        UNITS
+                "0.1 VDC"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "This is the DC voltage of the power bus B"
+        ::= { cerent15216EdfaGenericEdfa3PwrBusGroup 30 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusVoltageMin OBJECT-TYPE
+        SYNTAX Integer32 (0..470)
+        UNITS
+                "0.1 VDC"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "This is the minimum allowable DC voltage
+                of both the power buses.
+                "
+        ::= { cerent15216EdfaGenericEdfa3PwrBusGroup 40 }
+
+
+cerent15216EdfaGenericEdfa3PwrBusVoltageMax OBJECT-TYPE
+        SYNTAX Integer32 (490..700)
+        UNITS
+                "0.1 VDC"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "This is the maximum allowable DC voltage
+                of both the power buses."
+        ::= { cerent15216EdfaGenericEdfa3PwrBusGroup 50 }
+
+
+cerent15216EdfaGenericEdfa3MiscGroup OBJECT-IDENTITY
+        STATUS current
+        DESCRIPTION
+                "Group that has Miscellaneous scalars."
+        ::= { cerent15216EdfaGenericEdfa3Group 60 }
+
+cerent15216EdfaGenericEdfa3CaseTemperature OBJECT-TYPE
+        SYNTAX INTEGER (-1000..1500)
+        UNITS
+                "0.1 Degree Centigrade"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current case Temperature. Supports range 
+                 from -100 through +150 Degree Centigrade."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 10 }
+
+
+cerent15216EdfaGenericEdfa3CaseTempMin OBJECT-TYPE
+        SYNTAX Integer32 (-100..300)
+        UNITS
+                "0.1 Degree Centigrade"
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Minimum allowable case temperature.
+
+                The default value is  -5 C."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 11 }
+
+
+cerent15216EdfaGenericEdfa3CaseTempMax OBJECT-TYPE
+        SYNTAX Integer32 (600..1000)
+        UNITS
+                "0.1 Degree Centigrade "
+        MAX-ACCESS read-write
+        STATUS current
+        DESCRIPTION
+                "Maximum allowable case temperature.
+
+                Default value is +65 C.
+                "
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 12 }
+
+
+cerent15216EdfaGenericEdfa3FiberTemperature OBJECT-TYPE
+        SYNTAX INTEGER (-1000..1500)
+        UNITS
+                "0.1 Degree Centigrade"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current Fiber Temperature. Supports range 
+                 from -100 through +150 Degree Centigrade."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 20 }
+
+
+cerent15216EdfaGenericEdfa3PumpOneTemperature OBJECT-TYPE
+        SYNTAX INTEGER (-1000..1500)
+        UNITS
+                "0.1 Degree Centigrade"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current Pump Temperature in stage 1.
+
+                Supports range from 
+                -100 through +150 Degree Centigrade."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 30 }
+
+
+cerent15216EdfaGenericEdfa3LaserBiasOne OBJECT-TYPE
+        SYNTAX INTEGER (0..15000)
+        UNITS
+                "0.1 milliAmpere"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current Laser Bias in Stage 1."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 31 }
+
+
+cerent15216EdfaGenericEdfa3VOA OBJECT-TYPE
+        SYNTAX INTEGER (-1000..1000)
+        UNITS
+                "0.1 dB"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current value of Variable Optical Attenuation"
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 32 }
+
+
+cerent15216EdfaGenericEdfa3PumpTwoTemperature OBJECT-TYPE
+        SYNTAX INTEGER (-1000..1500)
+        UNITS
+                "0.1 Degree Centigrade"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current Pump Temperature in stage 2.
+
+                Supports range from 
+                -100 through +150 Degree Centigrade."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 33 }
+
+
+cerent15216EdfaGenericEdfa3LaserBiasTwo OBJECT-TYPE
+        SYNTAX INTEGER (0..15000)
+        UNITS
+                "0.1 milliAmpere"
+        MAX-ACCESS read-only
+        STATUS current
+        DESCRIPTION
+                "Current Laser Bias in stage 2."
+        ::= { cerent15216EdfaGenericEdfa3MiscGroup 34 }
+
+
+END
+

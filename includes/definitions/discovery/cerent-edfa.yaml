@@ -1,0 +1,222 @@
+mib: CERENT-15216-EDFA-MIB
+modules:
+    sensors:
+        dbm:
+            data:
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaInPowerdBm
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.2.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.2.0'
+                    descr: In Power dBm
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaOutPowerdBm
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.4.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.4.0'
+                    descr: Out Power dBm
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaConstGainOverallGainMeasured
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.7.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.7.0'
+                    descr: Measured Gain dB
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaVariableGainPreAttenuationMeasured
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.8.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.8.0'
+                    descr: Measured Pre Attenuation dB
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusInPowerdBm
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.10.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.10.1'
+                    descr: Pump 1 In Power dBm
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusOutPowerdBm
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.12.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.12.1'
+                    descr: Pump 1 Out Power dBm
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusGain
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.13.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.13.1'
+                    descr: Pump 1 Status Gain dB
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusInPowerdBm
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.10.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.10.2'
+                    descr: Pump 2 In Power dBm
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusOutPowerdBm
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.12.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.12.2'
+                    descr: Pump 2 Out Power dBm
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusGain
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.13.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.13.2'
+                    descr: Pump 2 Status Gain dB
+                    divisor: 10
+        power:
+            data:
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaInPoweruW
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.1.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.1.0'
+                    descr: In Power uW
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaOutPowermW,
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.3.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.1.3.0'
+                    descr: Out Power mW
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusInPoweruW
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.9.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.9.1'
+                    descr: Pump 1 In Power uW
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusOutPowermW
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.11.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.11.1'
+                    descr: Pump 1 Out Power mW
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusInPoweruW
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.9.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.9.2'
+                    descr: Pump 2 In Power uW
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusOutPowermW
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.11.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.11.2'
+                    descr: Pump 2 Out Power mW
+                    divisor: 10
+        temperature:
+            data:
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusAmbientTemp
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.7.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.7.1'
+                    descr: Pump 1 Ambient Temp
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserChipTemp
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.2.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.2.1'
+                    descr: Pump 1 Chip Temp
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserChipTempSetpoint
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.3.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.3.1'
+                    descr: Pump 1 Chip Temp Setpoint
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusAmbientTemp
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.7.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.7.2'
+                    descr: Pump 2 Ambient Temp
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserChipTemp
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.2.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.2.2'
+                    descr: Pump 2 Chip Temp
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserChipTempSetpoint
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.3.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.3.2'
+                    descr: Pump 2 Chip Temp Setpoint
+                    divisor: 10
+        current:
+            data:
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserTECCurrent
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.4.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.4.1'
+                    descr: Pump 1 Laser TEC Current
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserPower
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.5.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.5.1'
+                    descr: Pump 1 Laser Power
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserCurrent
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.6.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.6.1'
+                    descr: Pump 1 Laser Current
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusDCVoltage
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.8.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.8.1'
+                    descr: Pump 1 DC Voltage
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserTECCurrent
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.4.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.4.2'
+                    descr: Pump 2 Laser TEC Current
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserPower
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.5.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.5.2'
+                    descr: Pump 2 Laser Power
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusLaserCurrent
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.6.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.6.2'
+                    descr: Pump 2 Laser Current
+                    divisor: 10
+                -
+                    oid: cerent15216Edfa
+                    value: cerent15216EdfaPumpStatusDCVoltage
+                    num_oid: .1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.8.
+                    index: '.1.3.6.1.4.1.3607.6.30.3.2.2.1.2.2.2.1.8.2'
+                    descr: Pump 2 DC Voltage
+                    divisor: 10
+

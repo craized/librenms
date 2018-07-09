@@ -1,0 +1,251 @@
+mib: CERENT-15216-EDFA-GENERIC-MIB
+modules:
+    sensors:
+        dbm:
+            data:
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3Line1TxPwr
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.2.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.20.0'
+                    descr: Line 1 Tx Power
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3Line1RxPwr
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.1.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.10.0'
+                    descr: Line 1 Rx Power
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3Line2TxPwr
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.30.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.30.0'
+                    descr: Line 2 Tx Power
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3Line2RxPwr
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.40.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.40.0'
+                    descr: Line 2 Rx Power
+                    divisor: 10
+        current:
+            data:
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3LaserBiasOne
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.31.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.31.0'
+                    descr: cerent15216EdfaGenericEdfa3LaserBiasOne Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3LaserBiasTwo
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.34.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.34.0'
+                    descr: cerent15216EdfaGenericEdfa3LaserBiasTwo Z
+                    divisor: 10
+        voltage:
+            data:
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PwrBusAvoltage
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.50.20.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.50.20.0'
+                    descr: cerent15216EdfaGenericEdfa3PwrBusAvoltage Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PwrBusBvoltage
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.50.30.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.50.30.0'
+                    descr: cerent15216EdfaGenericEdfa3PwrBusBvoltage Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PwrBusVoltageMin
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.50.40.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.50.40.0'
+                    descr: cerent15216EdfaGenericEdfa3PwrBusVoltageMin Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PwrBusVoltageMax
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.50.50.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.50.50.0'
+                    descr: cerent15216EdfaGenericEdfa3PwrBusVoltageMax Z
+                    divisor: 10
+        temperature:
+            data:
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3CaseTemperature
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.10.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.10.0'
+                    descr: cerent15216EdfaGenericEdfa3CaseTemperature Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3FiberTemperature
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.20.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.20.0'
+                    descr: cerent15216EdfaGenericEdfa3FiberTemperature Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PumpOneTemperature
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.30.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.30.0'
+                    descr: cerent15216EdfaGenericEdfa3PumpOneTemperature Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PumpTwoTemperature
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.33.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.33.0'
+                    descr: cerent15216EdfaGenericEdfa3PumpTwoTemperature Z
+                    divisor: 10
+        power:
+            data:
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3Tilt
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.60.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.60.0'
+                    descr: cerent15216EdfaGenericEdfa3Tilt Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3DcuLoss
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.90.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.90.0'
+                    descr: cerent15216EdfaGenericEdfa3DcuLoss Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3PwrOffset
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.70.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.70.0'
+                    descr: cerent15216EdfaGenericEdfa3PwrOffset Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3Gain
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.80.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.80.0'
+                    descr: cerent15216EdfaGenericEdfa3Gain Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3VOA
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.32.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.32.0'
+                    descr: cerent15216EdfaGenericEdfa3VOA Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3GainThDegHigh
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.100.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.100.0'
+                    descr: cerent15216EdfaGenericEdfa3GainThDegHigh Z
+                    divisor: 10
+                -
+                    oid: cerent15216EdfaGenericMib
+                    value: cerent15216EdfaGenericEdfa3GainThDegLow
+                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.110.
+                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.110.0'
+                    descr: cerent15216EdfaGenericEdfa3GainThDegLow Z
+                    divisor: 10
+#
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Line1RxPwrThFailLow
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.20.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.20.0'
+#                    descr: cerent15216EdfaGenericEdfa3Line1RxPwrThFailLow Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Line2RxPwrThFailLow
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.50.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.50.0'
+#                    descr: cerent15216EdfaGenericEdfa3Line2RxPwrThFailLow Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3TiltSetpoint
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.70.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.70.0'
+#                    descr: cerent15216EdfaGenericEdfa3TiltSetpoint Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3TiltOffset
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.20.80.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.20.80.0'
+#                    descr: cerent15216EdfaGenericEdfa3TiltOffset Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3ControlMode
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.10.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.10.0'
+#                    descr: cerent15216EdfaGenericEdfa3ControlMode Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Line1TxPwrThDegLow
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.30.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.30.0'
+#                    descr: cerent15216EdfaGenericEdfa3Line1TxPwrThDegLow Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Line1TxPwrSetpoint
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.40.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.40.0'
+#                    descr: cerent15216EdfaGenericEdfa3Line1TxPwrSetpoint Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Line1TxPwrThDegHigh
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.50.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.50.0'
+#                    descr: cerent15216EdfaGenericEdfa3Line1TxPwrThDegHigh Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Line1TxPwrThFailLow
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.60.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.60.0'
+#                    descr: cerent15216EdfaGenericEdfa3Line1TxPwrThFailLow Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3AmpLaserStatus
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.40.10.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.40.10.0'
+#                    descr: cerent15216EdfaGenericEdfa3AmpLaserStatus Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3Osri
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.40.20.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.40.20.0'
+#                    descr: cerent15216EdfaGenericEdfa3Osri Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3PwrBusMode
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.50.10.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.50.10.0'
+#                    descr: cerent15216EdfaGenericEdfa3PwrBusMode Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3CaseTempMin
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.11.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.11.0'
+#                    descr: cerent15216EdfaGenericEdfa3CaseTempMin Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3CaseTempMax
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.60.12.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.60.12.0'
+#                    descr: cerent15216EdfaGenericEdfa3CaseTempMax Z
+#                -
+#                    oid: cerent15216EdfaGenericMib
+#                    value: cerent15216EdfaGenericEdfa3GainSetpoint
+#                    num_oid: .1.3.6.1.4.1.3607.6.31.20.50.30.90.
+#                    index: '.1.3.6.1.4.1.3607.6.31.20.50.30.90.0'
+#                    descr: cerent15216EdfaGenericEdfa3GainSetpoint Z
