@@ -203,6 +203,38 @@ $no_refresh = true;
 </div>
 <!-- End Pushover Modal -->
 
+<!-- ShellExec Modal -->
+<div class="modal fade" id="new-config-shellexec" role="dialog" aria-hidden="true" title="Create new config item">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form role="form" class="new_config_form">
+                    <div class="form-group">
+                        <span class="message"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="shellexec_identifier">ShellExec Identifier</label>
+                        <input type="text" class="form-control validation" name="shellexec_identifier" id="shellexec_identifier" placeholder="Enter the ShellExec Identifier" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shellexec_path">ShellExec Script Path</label>
+                        <input type="text" class="form-control validation" name="shellexec_path" id="shellexec_path" placeholder="Enter the ShellExec Script Path" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shellexec_extra">ShellExec Command Line Arguments</label>
+                        <textarea class="form-control" name="shellexec_extra" id="shellexec_extra" placeholder="Enter the config options"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="submit-shellexec">Add config</button>
+                <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End ShellExec Modal -->
+
 <!-- Boxcar Modal -->
 <div class="modal fade" id="new-config-boxcar" role="dialog" aria-hidden="true" title="Create new config item">
     <div class="modal-dialog">
@@ -845,6 +877,107 @@ foreach ($hipchat_urls as $hipchat_url) {
                 </div>
             </div>
         </div>
+    <!-- ShellExec Config -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#shellexec_transport_expand"><i class="fa fa-caret-down"></i> ShellExec Transport</a> <button name="test-alert" id="test-alert" type="button" data-transport="shellexec" class="btn btn-primary btn-xs pull-right">Test transport</button>
+                </h4>
+            </div>
+            <div id="shellexec_transport_expand" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-sm-8">
+                            <button class="btn btn-success btn-xs" type="button" name="new_config" id="new_config_item" data-toggle="modal" data-target="#new-config-shellexec">Add ShellExec Config</button>
+                        </div>
+                    </div>';
+$shellexec_appkeys = get_config_like_name('alert.transports.shellexec.%.appkey');
+foreach ($shellexec_appkeys as $shellexec_appkey) {
+    $shellexec_extra = array();
+    $shellexec_path = array();
+    // The whole config piece goes in here
+    $shellexec_extras    = get_config_like_name('alert.transports.shellexec.'.$shellexec_appkey['config_id'].'.%');
+    foreach ($shellexec_extras as $extra) {
+        $split_extra = explode('.', $extra['config_name']);
+        if ($split_extra[4] == 'path') {
+            $shellexec_path = $extra;
+        } elseif ($split_extra[4] == 'extra') {
+            $shellexec_extra = $extra;
+        } else {
+        // Toss everything unknown
+        }
+    }
+
+    echo '<div id="'.$shellexec_appkey['config_id'].'">
+                        <div class="form-group has-feedback">
+                            <label for="shellexec_identifier" class="col-sm-4 control-label">ShellExec Identifier</label>
+                            <div class="col-sm-4">
+                                <input id="shellexec_identifier" class="form-control" type="text" name="global-config-input" value="'.$shellexec_appkey['config_value'].'" data-config_id="'.$shellexec_appkey['config_id'].'">
+                                <span class="form-control-feedback">
+    <i class="fa" aria-hidden="true"></i>
+</span>
+                            </div>
+                            <div class="col-sm-4">
+                                <button type="button" class="btn btn-danger del-shellexec-config" name="del-shellexec-call" data-config_id="'.$shellexec_appkey['config_id'].'"><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="shellexec_path" class="col-sm-4 control-label">ShellExec Script Path</label>
+                            <div class="col-sm-8">
+                                <input id="shellexec_path" class="form-control" type="text" name="global-config-input" value="'.$shellexec_path['config_value'].'" data-config_id="'.$shellexec_path['config_id'].'">
+                                <span class="form-control-feedback">
+    <i class="fa" aria-hidden="true"></i>
+</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="shellexec_extra" class="col-sm-4 control-label">ShellExec Command Line Arguments</label>
+                            <div class="col-sm-8">
+                                <input id="shellexec_extra" class="form-control" type="text" name="global-config-input" value="'.$shellexec_extra['config_value'].'" data-config_id="'.$shellexec_extra['config_id'].'">
+                                <span class="form-control-feedback">
+    <i class="fa" aria-hidden="true"></i>
+</span>
+                            </div>
+                        </div>
+                    </div>';
+}//end foreach
+
+echo '<div id="shellexec_appkey_template" class="hide">
+                        <div class="form-group has-feedback">
+                            <label for="shellexec_identifier" class="col-sm-4 control-label api-method">ShellExec Identifier</label>
+                            <div class="col-sm-4">
+                                <input id="shellexec_identifier" class="form-control" type="text" name="global-config-input" value="" data-config_id="">
+                                <span class="form-control-feedback">
+    <i class="fa" aria-hidden="true"></i>
+</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-danger del-shellexec-config" id="del-shellexec-call" name="del-shellexec-call" data-config_id=""><i class="fa fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="shellexec_path" class="col-sm-4 control-label api-method">ShellExec Script Path</label>
+                            <div class="col-sm-8">
+                                <input id="shellexec_path" class="form-control" type="text" name="global-config-input" value="" data-config_id="">
+                                <span class="form-control-feedback">
+    <i class="fa" aria-hidden="true"></i>
+</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="shellexec_extra" class="col-sm-4 control-label api-method">Shell Exec Command Line Arguments</label>
+                            <div class="col-sm-8">
+                                <input id="shellexec_extra" class="form-control" type="text" name="global-config-input" value="" data-config_id="">
+                                <span class="form-control-feedback">
+    <i class="fa" aria-hidden="true"></i>
+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Boxcar Transport -->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -1486,7 +1619,7 @@ echo '
                     </div>
                 </div>
             </div>
-	</div>';
+    </div>';
 // Gitlab Transport Section
 
 $gitlab_host = get_config_by_name('alert.transports.gitlab.host');
@@ -1971,6 +2104,46 @@ echo '
         });
     });// End Add Pushover config
 
+    // Add ShellExec config
+    itemIndex = 0;
+    $("button#submit-shellexec").click(function(){
+        var config_value = $('#shellexec_identifier').val();
+        var config_path = $('#shellexec_path').val();
+        var config_extra = $('#shellexec_extra').val();
+        $.ajax({
+            type: "POST",
+            url: "ajax_form.php",
+            data: {type: "config-item", action: 'add-shellexec', config_group: "alerting", config_sub_group: "transports", config_extra: config_extra, config_value: config_value, config_path: config_path},
+            dataType: "json",
+            success: function(data){
+                if (data.status == 'ok') {
+                    itemIndex++;
+                    var $template = $('#shellexec_appkey_template'),
+                        $clone    = $template
+                            .clone()
+                            .removeClass('hide')
+                            .attr('id',data.config_id)
+                            .attr('shellexec-appkey-index', itemIndex)
+                            .insertBefore($template);
+                    $clone.find('[id="shellexec_identifier"]').attr('data-config_id',data.config_id);
+                    $clone.find('[id="del-shellexec-call"]').attr('data-config_id',data.config_id);
+                    $clone.find('[name="global-config-input"]').attr('value', config_value);
+                    $clone.find('[id="shellexec_path"]').val(config_path);
+                    $clone.find('[id="shellexec_path"]').attr('data-config_id',data.config_id);
+                    $clone.find('[id="shellexec_extra"]').val(config_extra);
+                    $clone.find('[id="shellexec_extra"]').attr('data-config_id',data.config_id);
+                    $("#new-config-shellexec").modal('hide');
+                } else {
+                    $("#message").html('<div class="alert alert-info">' + data.message + '</div>');
+                }
+            },
+            error: function(){
+                $("#message").html('<div class="alert alert-danger">Error creating config item</div>');
+            }
+        });
+    });// End Add ShellExec config
+
+
     // Add Boxcar config
     itemIndex = 0;
     $("button#submit-boxcar").click(function(){
@@ -2168,6 +2341,27 @@ echo '
             }
         });
     });// End delete pushover config
+
+    // Delete ShellExec config
+    $(document).on('click', 'button[name="del-shellexec-call"]', function(event) {
+        var config_id = $(this).data('config_id');
+        $.ajax({
+            type: 'POST',
+            url: 'ajax_form.php',
+            data: {type: "config-item", action: 'remove-shellexec', config_id: config_id},
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 'ok') {
+                    $("#"+config_id).remove();
+                } else {
+                    $("#message").html('<div class="alert alert-info">' + data.message + '</div>');
+                }
+            },
+            error: function () {
+                $("#message").html('<div class="alert alert-danger">An error occurred.</div>');
+            }
+        });
+    });// End delete Boxcar config
 
     // Delete Boxcar config
     $(document).on('click', 'button[name="del-boxcar-call"]', function(event) {
