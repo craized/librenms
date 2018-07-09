@@ -48,7 +48,7 @@ if (isset($_GET['nodetails'])) {
 if (isset($_GET['noagg'])) {
     $noagg = ((bool) $_GET['noagg']);
 } else {
-    $noagg = true;
+    $noagg = false;
 }
 
 if ($_GET['title'] == 'yes') {

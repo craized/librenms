@@ -62,8 +62,8 @@ foreach ($rrd_list as $rrd) {
         $descr_out = rrdtool_escape($rrd['descr_out'], $descr_len) . ' Out';
     }
 
-    $rrd_options .= ' DEF:' . $in . $i . '=' . $rrd['filename'] . ':' . $ds_in . ':AVERAGE ';
-    $rrd_options .= ' DEF:' . $out . $i . '=' . $rrd['filename'] . ':' . $ds_out . ':AVERAGE ';
+    $rrd_options .= ' DEF:' . $in . $i . '=' . $rrd['filename'] . ':' . $ds_in . ':MAX ';
+    $rrd_options .= ' DEF:' . $out . $i . '=' . $rrd['filename'] . ':' . $ds_out . ':MAX ';
     $rrd_options .= ' CDEF:inB' . $i . '=in' . $i . ",$multiplier,* ";
     $rrd_options .= ' CDEF:outB' . $i . '=out' . $i . ",$multiplier,*";
     $rrd_options .= ' CDEF:outB' . $i . '_neg=outB' . $i . ',' . $stacked['stacked'] . ',*';
