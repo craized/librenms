@@ -302,18 +302,22 @@ if ($port_details && $config['enable_port_relationship'] === true && port_permit
     foreach (dbFetchRows('SELECT * FROM `ports_stack` WHERE `port_id_low` = ? and `device_id` = ?', array($port['ifIndex'], $device['device_id'])) as $higher_if) {
         if ($higher_if['port_id_high']) {
             $this_port = get_port_by_index_cache($device['device_id'], $higher_if['port_id_high']);
-            $this_port = cleanPort($this_port);
-            echo "$br<i class='fa fa-expand fa-lg icon-theme' aria-hidden='true'></i> <strong>".generate_port_link($this_port).'</strong>';
-            $br = '<br />';
+            if (is_port_valid($this_port, $device)) {
+                $this_port = cleanPort($this_port);
+                echo "$br<i class='fa fa-expand fa-lg icon-theme' aria-hidden='true'></i> <strong>".generate_port_link($this_port).'</strong>';
+                $br = '<br />';
+            }
         }
     }
 
     foreach (dbFetchRows('SELECT * FROM `ports_stack` WHERE `port_id_high` = ? and `device_id` = ?', array($port['ifIndex'], $device['device_id'])) as $lower_if) {
         if ($lower_if['port_id_low']) {
             $this_port = get_port_by_index_cache($device['device_id'], $lower_if['port_id_low']);
-            $this_port = cleanPort($this_port);
-            echo "$br<i class='fa fa-compress fa-lg icon-theme' aria-hidden='true'></i> <strong>".generate_port_link($this_port).'</strong>';
-            $br = '<br />';
+            if (is_port_valid($this_port, $device)) {
+                $this_port = cleanPort($this_port);
+                echo "$br<i class='fa fa-compress fa-lg icon-theme' aria-hidden='true'></i> <strong>".generate_port_link($this_port).'</strong>';
+                $br = '<br />';
+            }
         }
     }
 }//end if
