@@ -349,17 +349,19 @@ function proxmox_rrd_name($pmxcluster, $vmid, $vmport)
  *
  * @param string $type only 'port' is supported at this time
  * @param string $filename the path to the rrd file
- * @param integer $max the new max value
+ * @param integer $max the new max value, 'U' for no maximum
  * @return bool
  */
 function rrdtool_tune($type, $filename, $max)
 {
     $fields = array();
     if ($type === 'port') {
-        if ($max < 10000000) {
+        if ($max < 10000000 && $max != 'U') {
             return false;
         }
-        $max = $max / 8;
+        if ($max != 'U') {
+            $max = $max / 8;
+        }
         $fields = array(
             'INOCTETS',
             'OUTOCTETS',
