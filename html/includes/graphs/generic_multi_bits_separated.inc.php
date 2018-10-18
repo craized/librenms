@@ -18,6 +18,11 @@ require 'includes/graphs/common.inc.php';
 $stacked = generate_stacked_graphs();
 
 $i = 0;
+if ($width > '400') {
+    $inc_perc = true;
+} else {
+    $inc_perc = false;
+}
 if ($width > '500') {
     $descr_len = 18;
 } else {
@@ -29,7 +34,11 @@ $unit_text = 'Bits/sec';
 
 if (!$noagg || !$nodetails) {
     if ($width > '500') {
-        $rrd_options .= " COMMENT:'" . substr(str_pad($unit_text, ($descr_len + 5)), 0, ($descr_len + 5)) . "    Current      Average     Maximum    '";
+        $rrd_options .= " COMMENT:'" . substr(str_pad($unit_text, ($descr_len + 5)), 0, ($descr_len + 5)) . "    Current      Average     Maximum     ";
+        if ($inc_perc) {
+            $rrd_options .= $config['percentile_value'] . "th %";
+        }
+        $rrd_options .= "'";
         if (!$nototal) {
             $rrd_options .= " COMMENT:'Total      '";
         }
@@ -74,6 +83,8 @@ foreach ($rrd_list as $rrd) {
         $rrd_options .= ' VDEF:totout' . $i . '=outB' . $i . ',TOTAL';
         $rrd_options .= ' VDEF:tot' . $i . '=octets' . $i . ',TOTAL';
     }
+    $rrd_options .= ' VDEF:percentile_in' . $i . '=inB' . $i . ',' . $config['percentile_value'] . ',PERCENT';
+    $rrd_options .= ' VDEF:percentile_out' . $i . '=outB' . $i . ',' . $config['percentile_value'] . ',PERCENT';
 
     if ($i) {
         $stack = ':STACK';
@@ -84,6 +95,9 @@ foreach ($rrd_list as $rrd) {
         $rrd_options .= ' GPRINT:inB' . $i . ":LAST:%6.2lf%s$units";
         $rrd_options .= ' GPRINT:inB' . $i . ":AVERAGE:%6.2lf%s$units";
         $rrd_options .= ' GPRINT:inB' . $i . ":MAX:%6.2lf%s$units";
+        if ($inc_perc) {
+            $rrd_options .= " GPRINT:percentile_in$i:%6.2lf%s";
+        }
         if (!$nototal) {
             $rrd_options .= ' GPRINT:totin' . $i . ":%6.2lf%s$total_units";
         }
@@ -98,6 +112,9 @@ foreach ($rrd_list as $rrd) {
         $rrd_options .= ' GPRINT:outB' . $i . ":LAST:%6.2lf%s$units";
         $rrd_options .= ' GPRINT:outB' . $i . ":AVERAGE:%6.2lf%s$units";
         $rrd_options .= ' GPRINT:outB' . $i . ":MAX:%6.2lf%s$units";
+        if ($inc_perc) {
+            $rrd_options .= " GPRINT:percentile_out$i:%6.2lf%s";
+        }
         if (!$nototal) {
             $rrd_options .= ' GPRINT:totout' . $i . ":%6.2lf%s$total_unit";
         }
@@ -131,6 +148,8 @@ if (!$noagg) {
     $rrd_options .= ' CDEF:aggroutbits=aggroutbytes,' . $multiplier . ',*';
     $rrd_options .= ' VDEF:totalin=aggrinbytes,TOTAL';
     $rrd_options .= ' VDEF:totalout=aggroutbytes,TOTAL';
+    $rrd_options .= ' VDEF:percentile_in=aggrinbits,' . $config['percentile_value'] . ',PERCENT';
+    $rrd_options .= ' VDEF:percentile_out=aggroutbits,' . $config['percentile_value'] . ',PERCENT';
     $rrd_options .= " COMMENT:' \\\\n'";
     $rrd_options .= " COMMENT:'" . substr(str_pad('Aggregate In', ($descr_len + 5)), 0, ($descr_len + 5)) . "'";
     $rrd_options .= " GPRINT:aggrinbits:LAST:%6.2lf%s$units";
@@ -138,6 +157,9 @@ if (!$noagg) {
     $rrd_options .= " GPRINT:aggrinbits:MAX:%6.2lf%s$units";
     if (!$nototal) {
         $rrd_options .= " GPRINT:totalin:%6.2lf%s$total_units";
+    }
+    if ($inc_perc) {
+        $rrd_options .= " GPRINT:percentile_in:%6.2lf%s";
     }
 
     $rrd_options .= "\\\\n";
@@ -148,8 +170,12 @@ if (!$noagg) {
     if (!$nototal) {
         $rrd_options .= " GPRINT:totalout:%6.2lf%s$total_units";
     }
+    if ($inc_perc) {
+        $rrd_options .= " GPRINT:percentile_out:%6.2lf%s";
+    }
 
     $rrd_options .= "\\\\n";
+    $rrd_options .= ' LINE1:percentile_in#aa0000';
 }
 
 if ($custom_graph) {
