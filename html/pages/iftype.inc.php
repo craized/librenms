@@ -10,6 +10,20 @@ if ($bg == '#ffffff') {
 
 $types_array = explode(',', $vars['type']);
 $ports = get_ports_from_type($types_array);
+$hostname = $vars['hostname'];
+$hostname_string = '';
+
+if ($hostname) {
+    $cleaned_ports = array();
+    foreach ($ports as $key=>$value) {
+        if (preg_match("/^$hostname/", $value["hostname"])) {
+            array_push($cleaned_ports, $value);
+            $hostname_string = ' for device ' . $hostname;
+        }
+    }
+    $ports = $cleaned_ports;
+    unset($cleaned_ports);
+}
 
 $port_groups = [];
 $port_groups_port_ids = [];
@@ -36,7 +50,7 @@ foreach ($port_groups as $group => $port_list) {
         <td colspan='5'><span class=list-large><div class='panel panel-default'><div class='panel-heading'>".$group.' Hosts</div></div></span></td></tr>';
 
     echo "<tr class='iftype'>
-        <td colspan='5'><span class=list-large>Total Graph for ports of type : ".$types.'</span><br />';
+        <td colspan='5'><span class=list-large>Total Graph for ports of type : ".$types.$hostname_string.'</span><br />';
 
     if ($if_list) {
         $graph_type      = 'multiport_bits_separate';
